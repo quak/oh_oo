@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import android.R;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -24,6 +25,29 @@ import android.widget.ListView;
 public class Comm extends AsyncTask<String, Void, JSONObject>{
 	
 	ListActivity a = null;
+	ProgressDialog dialog;
+	
+	public Comm(Context context){
+		dialog = new ProgressDialog(context);
+		//dialog.setTitle("loading");
+	}
+	
+	
+	
+	@Override
+	protected void onPreExecute(){
+		this.show();
+		
+	}
+	
+	void show() {
+	    dialog.setMessage("loading News");
+	    dialog.show();
+	}
+
+	void hide() {
+	    dialog.dismiss();
+	}
 	
 	@Override
 	protected JSONObject doInBackground(String... urls) {
@@ -58,9 +82,8 @@ public class Comm extends AsyncTask<String, Void, JSONObject>{
 
 	        } 
 	    catch(Exception e) {
-	               // Exception Code
+	              
 	    }
-	    
 
 	    return ret_jobj;
 	}
@@ -73,6 +96,7 @@ public class Comm extends AsyncTask<String, Void, JSONObject>{
 		this.a = a;
 	}
 
+
 	@Override
 	protected void onPostExecute(JSONObject result){
         int i=0;
@@ -81,25 +105,21 @@ public class Comm extends AsyncTask<String, Void, JSONObject>{
         
         try {
         	JSONObject jobj_entry;
-			for(i=0;i<10;i++){
+			for(i=0;i<result.length();i++){
 				
 				jobj_entry = result.getJSONObject("entry"+i);
-				ll.add(new ArrayAdapterEntry(jobj_entry.getString("datetime"),jobj_entry.getString("title"),jobj_entry.getString("short"), "http://web27.dev.websafari.eu/cms/uploads/pics/resized/", jobj_entry.getString("image")));
+				ll.add(new ArrayAdapterEntry(jobj_entry.getString("datetime"),jobj_entry.getString("title"),jobj_entry.getString("short"),jobj_entry.getString("bodytext"), "http://web27.dev.websafari.eu/cms/uploads/pics/resized/", jobj_entry.getString("image")));
 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
- 
+        dialog.hide();
         Object[] aae = ll.toArray();
 		
 		a.setListAdapter(new MyArrayAdapter((Activity)a, aae));
+		
 
-		
-		
 	}
-	
-	
-	
 
 }

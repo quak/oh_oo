@@ -2,15 +2,21 @@ package com.websafari.droid;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream.GetField;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.http.util.ByteArrayBuffer;
 
 
+import android.R;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -24,61 +30,57 @@ public class loadImage extends AsyncTask<comObject, Void, comObject>{
 	protected comObject doInBackground(comObject... co) {
 	  
 		try {	Drawable image=null;
-	           
-	         
+	           	         
 	           	if(co[0].getIv()==null){
 	           		Log.e("!","quak");
 	           	}
-				//URL url = new URL("http://web27.dev.websafari.eu/cms/uploads/pics/resized/ooe_fahne_01.jpg");
-				URL url = new URL(co[0].getPath()+""+co[0].getFilename()); //you can write here any link
-	            //File f = new File(Environment.getExternalStorageDirectory().toString()+"/"+co[0].getFilename());
-				Log.e("!",co[0].getPath()+co[0].getFilename());
-
-	            /* Open a connection to that URL. */
+				
+				URL url = new URL(co[0].getPath()+""+co[0].getFilename()); 
+				
 	            URLConnection ucon = url.openConnection();
 
 	            InputStream is = ucon.getInputStream();
 
 	            image = Drawable.createFromStream(is, "src");
+	            Bitmap img = ((BitmapDrawable)image).getBitmap();
 
-//	            BufferedInputStream bis = new BufferedInputStream(is);
-//	
-//	            /*
-//	             * Read bytes to the Buffer until there is nothing more to read(-1).
-//	             */
-//	            ByteArrayBuffer baf = new ByteArrayBuffer(50);
-//	            int current = 0;
-//	            while ((current = bis.read()) != -1) {
-//	                    baf.append((byte) current);
-//	            }
-			
-//	            /* Convert the Bytes read to a String. */
-//	            f.createNewFile();
-//	            FileOutputStream fos = new FileOutputStream(f);
-//	            fos.write(baf.toByteArray());
-//	            fos.close();
-	            
+	            try {
+	            	File dir = co[0].getC().getCacheDir();
+	            	File myFile = new File(dir, co[0].getFilename());
+
+	                FileOutputStream out = new FileOutputStream(myFile);
+
+	                img.compress(Bitmap.CompressFormat.PNG, 90, out);
+	                out.flush();
+	                out.close();
+	         
+		         } catch (Exception e) {
+		                e.printStackTrace();
+		         }
+
 	            co[0].setImg(image);
-	            
+
 	            return co[0];
 		    } catch (IOException e) {
-		          Log.e("loadImg", "Fail");
+
+		        return co[0];
 		    }
 
-		return null;
 	}
 	
 	@Override
 	protected void onPostExecute(comObject co){
-		
 
+		if(co.getImg()!=null){
+			co.getIv().setImageDrawable(co.getImg());
+			co.getAae().setImg(co.getImg());
+			
+		}else{
+			
+			co.getIv().setImageResource(com.websafari.droid.R.drawable.oehlogo);
+			
+		}
 
-		co.getIv().setImageDrawable(co.getImg());
-//		if(co.getIv()!=null)
-//			co.getIv().setImageResource(R.drawable.up);
-//		Toast.makeText(co.getC(), "yeah", Toast.LENGTH_LONG).show();
-		//Toast.makeText(co.getC(), co.getImg().toString(), Toast.LENGTH_LONG).show();
-		
 
 		
 	}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent" 
+	android:weightSum="1"
+	android:orientation="horizontal">
+	
+	<LinearLayout 
+		android:layout_width="470dp" 
+		android:layout_height="80dp" 
+		android:orientation="vertical">
+		
+
+		<TextView 
+			android:id="@+id/datum"
+			android:text="11.11.2011"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:paddingTop="5dp"
+			android:layout_marginLeft="40dp"
+			android:textSize="9sp"
+		/>
+		
+		<LinearLayout 
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			>
+	
+			<ImageView android:id="@+id/icon" 
+				android:layout_height="wrap_content"
+				android:layout_width="40dp"
+				android:src="@drawable/icon" 
+				android:paddingRight="5dp"
+				android:paddingLeft="10dp">
+			</ImageView>
+				
+			<LinearLayout 
+				android:orientation="vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+		
+				<TextView android:text="@+id/TextView01" 
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content" 
+					android:id="@+id/title"
+					android:textSize="12sp"
+					android:textColor="#ff9600">
+				</TextView>
+				
+				<TextView 
+					android:text="Untertitel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/subtitle"
+					android:textSize="10sp"
+				/>
+	
+				
+			</LinearLayout>
+		</LinearLayout>			
+	</LinearLayout>	
+	
+	<ImageView android:id="@+id/next_icon" 
+		android:layout_height="wrap_content"
+		android:layout_width="40dp"
+		android:src="@drawable/next" 
+		android:layout_marginLeft="5dp"
+		android:layout_gravity="center_vertical|right">
+	</ImageView>
+		
+	
+</LinearLayout>
+
+

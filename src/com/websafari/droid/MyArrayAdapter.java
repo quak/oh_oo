@@ -1,8 +1,15 @@
 package com.websafari.droid;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.style.SubscriptSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,15 +60,47 @@ public class MyArrayAdapter extends ArrayAdapter<Object> {
 		} else {
 			holder = (ViewHolder) rowView.getTag();
 		}
+		
 		String subtitle = ((ArrayAdapterEntry)aae[position]).getText();
-		subtitle = subtitle.substring(0, 30);
+		
+		
+		if(!(subtitle.length()<61)){
+			subtitle = subtitle.substring(0, 60);
+		}else{
+			subtitle="";
+		}
+		
 		holder.subtitle.setText(subtitle);
 		holder.title.setText(((ArrayAdapterEntry)aae[position]).getTitle());
 		holder.date.setText(((ArrayAdapterEntry)aae[position]).getDate());
+        
+		try {
+        	   
+			FileInputStream	in = new FileInputStream(context.getCacheDir()+"/"+((ArrayAdapterEntry)aae[position]).getFilename());
+			
+			
+			if(!((ArrayAdapterEntry)aae[position]).getFilename().equals("")){
+				
+				BufferedInputStream bis = new BufferedInputStream(in);
+				Bitmap bMap = BitmapFactory.decodeStream(bis);
+				holder.thumbnail.setImageBitmap(bMap);
+			}else{
+				
+				loadImage li = new loadImage();
+				comObject co = new comObject(((ArrayAdapterEntry)aae[position]).getPath(), ((ArrayAdapterEntry)aae[position]).getFilename(), holder.thumbnail, context,((ArrayAdapterEntry)aae[position]).getDate(),aae[position]);
+				li.execute(co);
+			}
+
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			loadImage li = new loadImage();
+			comObject co = new comObject(((ArrayAdapterEntry)aae[position]).getPath(), ((ArrayAdapterEntry)aae[position]).getFilename(), holder.thumbnail, context,((ArrayAdapterEntry)aae[position]).getDate(),aae[position]);
+			li.execute(co);
+			Log.e("XXXXXX", "catchblock");
+		}
 		
-		loadImage li = new loadImage();
-		comObject co = new comObject(((ArrayAdapterEntry)aae[position]).getPath(), ((ArrayAdapterEntry)aae[position]).getFilename(), holder.thumbnail, context,((ArrayAdapterEntry)aae[position]).getDate());
-		li.execute(co);
+
 
 		return rowView;
 	}

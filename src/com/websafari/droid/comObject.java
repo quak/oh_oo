@@ -12,14 +12,24 @@ public class comObject{
 	private ImageView iv;
 	private Drawable d;
 	private Context c;
+	private ArrayAdapterEntry aae;
 	
-	public comObject(String path, String filename, ImageView iv, Context c,String date) {
+	public ArrayAdapterEntry getAae() {
+		return aae;
+	}
+
+	public void setAae(ArrayAdapterEntry aae) {
+		this.aae = aae;
+	}
+
+	public comObject(String path, String filename, ImageView iv, Context c,String date,Object aae) {
 		// TODO Auto-generated constructor stub
 		this.setPath(path);
 		this.setFilename(filename);
 		this.setIv(iv);
 		this.setC(c);
 		this.setDate(date);
+		this.setAae((ArrayAdapterEntry)aae);
 	}
 
 	public String getPath() {

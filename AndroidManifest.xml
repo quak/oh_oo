@@ -10,14 +10,26 @@
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <activity android:name=".Ohoo"
-                  android:label="@string/app_name">
+    <application android:icon="@drawable/iconblue_events" 
+    			 android:label="ÖH FH OOE"
+    			 android:debuggable="true"
+    			 android:theme="@android:style/Theme.NoTitleBar">
+    		
+        
+               	 
+        <activity android:name=".menuview">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        		<action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+		
+        <activity  android:name=".ohoo"></activity>
+        <activity android:name=".news_singleview"></activity>
+        
+        
     </application>
+    
+
+    
 </manifest>
