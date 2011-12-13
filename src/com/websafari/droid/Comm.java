@@ -116,8 +116,14 @@ public class Comm extends AsyncTask<String, Void, JSONObject>{
 		}
         dialog.hide();
         Object[] aae = ll.toArray();
+        
+        MyArrayAdapter maa = new MyArrayAdapter((Activity)a, aae);
+        
+        ArrayAdapterEntry x= new ArrayAdapterEntry("12.12.12", "QUAK", "quakquak", "Yeah hell Quak", "http://web27.dev.websafari.eu/cms/uploads/pics/resized/", "redbull_ad_contest_01.png");
+      //  maa.insert((Object)x, 4);
+     // maa.remove(maa.getItem(0));
+		a.setListAdapter(maa); 
 		
-		a.setListAdapter(new MyArrayAdapter((Activity)a, aae));
 		
 
 	}

@@ -37,6 +37,8 @@ public class MyArrayAdapter extends ArrayAdapter<Object> {
 		public TextView title;
 		public TextView subtitle;
 	}
+	
+
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

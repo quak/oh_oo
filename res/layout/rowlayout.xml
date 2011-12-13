@@ -45,7 +45,8 @@
 					android:layout_height="wrap_content" 
 					android:id="@+id/title"
 					android:textSize="14sp"
-					android:textColor="#ff9600">
+					android:textColor="#ff9600"
+					android:background="@drawable/bg_news">
 				</TextView>
 				
 				<TextView 

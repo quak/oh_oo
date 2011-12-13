@@ -12,7 +12,7 @@ public class ohoo extends ListActivity {
         super.onCreate(savedInstanceState);
       
         int limit = 30;
-        int start = 80;
+        int start = 0;
         
         /*JSON Objekt holen*/
        
